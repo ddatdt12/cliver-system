@@ -1,3 +1,4 @@
+using CliverApi.Hubs;
 using CliverSystem.Extensions;
 using CliverSystem.Middlewares;
 using CliverSystem.Models;
@@ -63,6 +64,7 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chat");
 });
 
 app.Run();
