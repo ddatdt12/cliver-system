@@ -50,10 +50,8 @@ namespace CliverSystem.Core.Repositories
             {
                 return orderBy(query);
             }
-            else
-            {
-                return query;
-            }
+
+            return query;
         }
         public virtual async Task<bool> Add(T entity)
         {
