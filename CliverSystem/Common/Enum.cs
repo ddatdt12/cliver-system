@@ -29,11 +29,14 @@ namespace CliverSystem.Common
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public enum JobStatus
+        public enum OrderStatus
         {
             Created,
             Received,
             Doing,
+            Delivered,  
+            Completed,
+            Cancelled,
         }
     }
 }
