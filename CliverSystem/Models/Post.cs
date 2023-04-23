@@ -12,9 +12,9 @@ namespace CliverSystem.Models
         public Post()
         {
             Status = PostStatus.Draft;
-            Tags = String.Empty;
-            Images = String.Empty;
-            Subcategory = null!;
+            Tags = string.Empty;
+            Images = string.Empty;
+            Subcategory = null;
             UserId = null!;
             HasOfferPackages = false;
             Packages = new List<Package>();

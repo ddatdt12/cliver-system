@@ -15,6 +15,7 @@ namespace CliverSystem.Models
             modelBuilder.Seed();
             modelBuilder.ApplyConfiguration(new PackageConfiguration());
             modelBuilder.ApplyConfiguration(new PostConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
             //modelBuilder.ApplyConfiguration(new RoomConfiguration());
         }
         public DbSet<User> Users => Set<User>();
@@ -22,6 +23,8 @@ namespace CliverSystem.Models
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Subcategory> Subcategories => Set<Subcategory>();
         public DbSet<Package> Packages => Set<Package>();
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<OrderHistory> OrderHistory => Set<OrderHistory>();
 
         public override int SaveChanges()
         {

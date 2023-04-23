@@ -32,6 +32,7 @@ namespace CliverSystem.Models
         public bool IsActive { get; set; }
         public bool IsVerified { get; set; }
         public ICollection<Post> Posts { get; set; }
+        public ICollection<Order>? Orders{ get; set; }
         //public ICollection<Room> Rooms { get; set; }
     }
 }

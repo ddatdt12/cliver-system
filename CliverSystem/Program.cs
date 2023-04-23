@@ -1,4 +1,4 @@
-using CliverApi.Hubs;
+using CliverSystem.Hubs;
 using CliverSystem.Extensions;
 using CliverSystem.Middlewares;
 using CliverSystem.Models;

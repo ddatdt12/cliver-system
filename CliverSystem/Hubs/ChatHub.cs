@@ -1,7 +1,7 @@
 ﻿using CliverSystem.Models;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CliverApi.Hubs
+namespace CliverSystem.Hubs
 {
     public class ChatHub : Hub
     {
