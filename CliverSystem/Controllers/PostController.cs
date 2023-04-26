@@ -6,6 +6,7 @@ using CliverSystem.DTOs.RequestFeatures;
 using CliverSystem.Error;
 using CliverSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using static CliverSystem.Common.Enum;
 
@@ -26,16 +27,8 @@ namespace CliverSystem.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// GET: api/<PostController>
-        /// Get posts with pagination, filter
-        /// </summary>
-        /// <param name="postParam"></param>
-        /// <returns>Pagination Info in header "X-Pagination"</returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
         [HttpGet]
-        [Produces(typeof(ApiResponse<IEnumerable<Post>>))]
+        [Produces(typeof(ApiResponse<IEnumerable<PostDto>>))]
         public async Task<IActionResult> Get([FromQuery] PostParameters postParam)
         {
             var posts = await _unitOfWork.Posts.GetPosts(postParam);

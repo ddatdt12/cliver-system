@@ -10,9 +10,8 @@ namespace CliverSystem.Models
     {
         public Order()
         {
-            Buyer = null;
             Note = "";
-            BuyerId = "";
+            BuyerId = null!;
         }
         public int Id { get; set; }
         public int Price { get; set; }

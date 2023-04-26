@@ -12,6 +12,7 @@ namespace CliverSystem.Models
         {
             IsAvailable = true;
             Orders = null;
+            Post = new Post();
         }
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -24,7 +25,7 @@ namespace CliverSystem.Models
         public bool IsAvailable { get; set; }
         [Column(TypeName = "varchar(12)")]
         public PackageType Type { get; set; }
-        public ICollection<Order>? Orders{ get; set; }
+        public ICollection<Order>? Orders { get; set; }
     }
 
     public class PackageConfiguration : IEntityTypeConfiguration<Package>

@@ -12,6 +12,13 @@ namespace CliverSystem.Common
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum Mode
+        {
+            Buyer,
+            Seller
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum PackageType
         {
             Basic,
