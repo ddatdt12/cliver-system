@@ -22,6 +22,7 @@ namespace CliverSystem.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public long Balance { get; set; }
         public long NetIncome { get; set; }
         public long Withdrawn { get; set; }
         public long UsedForPurchases { get; set; }
