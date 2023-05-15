@@ -4,6 +4,7 @@ using CliverSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CliverSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220915090251_AddLockedMoneyOrder")]
+    partial class AddLockedMoneyOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1347,9 +1349,6 @@ namespace CliverSystem.Migrations
                     b.Property<long>("AvailableForWithdrawal")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Balance")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1405,7 +1404,6 @@ namespace CliverSystem.Migrations
                         {
                             Id = "53f891d8-bd32-40cf-a30c-04f2d5ecf164",
                             AvailableForWithdrawal = 0L,
-                            Balance = 0L,
                             CreatedAt = new DateTime(2022, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
                             Email = "test@gmail.com",
@@ -1425,7 +1423,6 @@ namespace CliverSystem.Migrations
                         {
                             Id = "fedb88e2-decb-45a2-a0f1-8edc92b0b918",
                             AvailableForWithdrawal = 0L,
-                            Balance = 0L,
                             CreatedAt = new DateTime(2022, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
                             Email = "admin@admin.com",
