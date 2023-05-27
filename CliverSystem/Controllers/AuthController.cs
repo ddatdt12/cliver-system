@@ -37,10 +37,7 @@ namespace CliverSystem.Controllers
             if (user == null)
             {
                 //throw new HttpResponseException("Not found", 404);
-                return NotFound(
-                    new ApiException("Email or password is wrong")
-                    { StatusCode = 404 })
-                    ;
+                return NotFound(new ApiException("Email or password is wrong", statusCode: 404));
             }
 
             string token = _unitOfWork.Auth.GenerateToken(user);

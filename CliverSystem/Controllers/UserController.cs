@@ -73,6 +73,19 @@ namespace CliverSystem.Controllers
             return NoContent();
         }
 
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateItem(string id, User user)
+        //{
+        //    if (id != user.Id)
+        //        return BadRequest();
+
+        //    await _unitOfWork.Users.Upsert(user);
+        //    await _unitOfWork.CompleteAsync();
+
+        //    // Following up the REST standart on update we need to return NoContent
+        //    return NoContent();
+        //}
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
