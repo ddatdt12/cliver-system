@@ -14,11 +14,11 @@ namespace CliverSystem.Error
                 _message = value;
             }
         }
-        public ApiException(string message = "Server Error") : base(message)
+        public ApiException(string message = "Server Error", string[]? errors = null) : base(message)
         {
             StatusCode = 500;
             _message = message;
-
+            Errors = errors != null ? errors : new string[] { message };
         }
         public ApiException(string message = "Server Error", int statusCode = 500, string[]? errors = null) : base(message)
         {

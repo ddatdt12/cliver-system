@@ -23,7 +23,7 @@ namespace CliverSystem.Extensions
                             logger.LogError($"Something went wrong: {contextFeature.Error}");
 
                             var errorDetail = contextFeature.Error as ApiException;
-                            string message = "Internal Server Error.";
+                            string message = contextFeature.Error.Message ?? "Internal Server Error.";
 
                             if (errorDetail != null)
                             {
@@ -36,12 +36,8 @@ namespace CliverSystem.Extensions
                                 message = updateErr?.InnerException?.Message ?? updateErr?.Message ?? "";
                             }
 
-                            Exception errorRes = new ApiException(message)
-                            {
-                                StatusCode = context.Response.StatusCode
-                            };
-                            await context.Response.WriteAsync(errorRes
-                          .ToString());
+                            Exception errorRes = new ApiException(message, statusCode: context.Response.StatusCode);
+                            await context.Response.WriteAsync(errorRes.ToString());
                         }
                     });
             });

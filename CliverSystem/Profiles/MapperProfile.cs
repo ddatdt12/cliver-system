@@ -1,4 +1,4 @@
-    using AutoMapper;
+using AutoMapper;
 using CliverSystem.DTOs;
 using CliverSystem.Models;
 
@@ -27,5 +27,11 @@ public class MapperProfile : Profile
         CreateMap<Post, PostDto>()
             .ForMember(pDto => pDto.Tags, options => options.MapFrom(p => p.Tags.Split(';', StringSplitOptions.None)))
             .ForMember(pDto => pDto.Images, options => options.MapFrom(p => p.Images.Split(';', StringSplitOptions.None)));
+
+
+        //Order
+        CreateMap<Order, OrderDto>();
+        CreateMap<OrderDto, Order>();
+        CreateMap<CreateOrderDto, Order>();
     }
 }
