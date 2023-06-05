@@ -9,7 +9,7 @@ namespace CliverSystem.Hubs
         public static List<Room> Rooms = new List<Room>();
         public ChatHub(IDictionary<string, string> connections)
         {
-            _connections =connections;
+            _connections = connections;
         }
 
         public async Task JoinRealtime(string userId)
