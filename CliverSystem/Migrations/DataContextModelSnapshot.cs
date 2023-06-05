@@ -36,7 +36,7 @@ namespace CliverSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
 
                     b.HasData(
                         new
@@ -132,7 +132,7 @@ namespace CliverSystem.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("CliverSystem.Models.OrderHistory", b =>
@@ -159,7 +159,7 @@ namespace CliverSystem.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderHistory");
+                    b.ToTable("OrderHistory", (string)null);
                 });
 
             modelBuilder.Entity("CliverSystem.Models.Package", b =>
@@ -205,7 +205,7 @@ namespace CliverSystem.Migrations
 
                     b.HasIndex("Type");
 
-                    b.ToTable("Package");
+                    b.ToTable("Package", (string)null);
                 });
 
             modelBuilder.Entity("CliverSystem.Models.Post", b =>
@@ -268,7 +268,7 @@ namespace CliverSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Post", (string)null);
                 });
 
             modelBuilder.Entity("CliverSystem.Models.Subcategory", b =>
@@ -290,7 +290,7 @@ namespace CliverSystem.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Subcategory");
+                    b.ToTable("Subcategory", (string)null);
 
                     b.HasData(
                         new
@@ -1398,7 +1398,7 @@ namespace CliverSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
 
                     b.HasData(
                         new

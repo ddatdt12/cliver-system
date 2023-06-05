@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CliverSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220811134851_AddVerifiedBoolUser")]
-    partial class AddVerifiedBoolUser
+    [Migration("20220917162216_OrderEntity_UserModify")]
+    partial class OrderEntity_UserModify
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,82 @@ namespace CliverSystem.Migrations
                             Id = 9,
                             Name = "Trending"
                         });
+                });
+
+            modelBuilder.Entity("CliverSystem.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BuyerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueBy")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("LockedMoney")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RevisionTimes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("CliverSystem.Models.OrderHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BeforeStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderHistory");
                 });
 
             modelBuilder.Entity("CliverSystem.Models.Package", b =>
@@ -1270,6 +1346,9 @@ namespace CliverSystem.Migrations
                     b.Property<long>("AvailableForWithdrawal")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1325,6 +1404,7 @@ namespace CliverSystem.Migrations
                         {
                             Id = "53f891d8-bd32-40cf-a30c-04f2d5ecf164",
                             AvailableForWithdrawal = 0L,
+                            Balance = 0L,
                             CreatedAt = new DateTime(2022, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
                             Email = "test@gmail.com",
@@ -1344,6 +1424,7 @@ namespace CliverSystem.Migrations
                         {
                             Id = "fedb88e2-decb-45a2-a0f1-8edc92b0b918",
                             AvailableForWithdrawal = 0L,
+                            Balance = 0L,
                             CreatedAt = new DateTime(2022, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "",
                             Email = "admin@admin.com",
@@ -1359,6 +1440,36 @@ namespace CliverSystem.Migrations
                             UsedForPurchases = 0L,
                             Withdrawn = 0L
                         });
+                });
+
+            modelBuilder.Entity("CliverSystem.Models.Order", b =>
+                {
+                    b.HasOne("CliverSystem.Models.User", "Buyer")
+                        .WithMany("Orders")
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CliverSystem.Models.Package", "Package")
+                        .WithMany("Orders")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("CliverSystem.Models.OrderHistory", b =>
+                {
+                    b.HasOne("CliverSystem.Models.Order", "Order")
+                        .WithMany("Histories")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("CliverSystem.Models.Package", b =>
@@ -1407,6 +1518,16 @@ namespace CliverSystem.Migrations
                     b.Navigation("Subcategories");
                 });
 
+            modelBuilder.Entity("CliverSystem.Models.Order", b =>
+                {
+                    b.Navigation("Histories");
+                });
+
+            modelBuilder.Entity("CliverSystem.Models.Package", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("CliverSystem.Models.Post", b =>
                 {
                     b.Navigation("Packages");
@@ -1414,6 +1535,8 @@ namespace CliverSystem.Migrations
 
             modelBuilder.Entity("CliverSystem.Models.User", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

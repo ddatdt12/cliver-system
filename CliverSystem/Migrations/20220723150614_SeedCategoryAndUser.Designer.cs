@@ -102,9 +102,6 @@ namespace CliverSystem.Migrations
                     b.Property<bool>("CanDesignCustomized")
                         .HasColumnType("bit");
 
-                    b.Property<int>("DeliveryTime")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
