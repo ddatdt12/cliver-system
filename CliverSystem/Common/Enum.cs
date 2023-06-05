@@ -39,7 +39,6 @@ namespace CliverSystem.Common
         public enum OrderStatus
         {
             Created,
-            Received,
             Doing,
             Delivered,  
             Completed,
