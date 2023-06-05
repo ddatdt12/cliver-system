@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using static CliverSystem.Common.Enum;
+﻿using static CliverSystem.Common.Enum;
 
 namespace CliverSystem.DTOs
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class OrderDto : ControllerBase
+  public class OrderDto
   {
     public OrderDto()
     {
