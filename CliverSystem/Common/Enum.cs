@@ -23,7 +23,8 @@ namespace CliverSystem.Common
         {
             Basic,
             Standard,
-            Premium
+            Premium,
+            Custom
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -36,13 +37,71 @@ namespace CliverSystem.Common
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum PaymentMethod
+        {
+            MyWallet,
+            VnPay,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum OrderStatus
         {
+            PendingPayment,
             Created,
             Doing,
-            Delivered,  
+            Delivered,
             Completed,
             Cancelled,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum PostFilter
+        {
+            Relevance,
+            BestSelling,
+            NewArrivals,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum OrderActionType
+        {
+            Start,
+            Cancel,
+            Delivery,
+            Receive,
+            Revision,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum ReviewType
+        {
+            FromBuyer,
+            FromSeller,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum TransactionType
+        {
+            Deposit,
+            Payment,
+            Refund,
+            Withdrawal,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum NotificationType
+        {
+            OrderInfo,
+            CustomPackage,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum PackageStatus
+        {
+            Available,
+            Closed,
+            Declined,
+            Ordered,
         }
     }
 }
