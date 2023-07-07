@@ -1,11 +1,13 @@
-﻿using System.Linq.Expressions;
+﻿using CliverSystem.DTOs;
+using CliverSystem.Models;
+using System.Linq.Expressions;
 
 namespace CliverSystem.Core.Contracts
 {
     public interface IGenericRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> FindById<TId>(TId id);
+        Task<T> FindById<TId>(TId id, bool trackChanges = true);
         IQueryable<T> Find(Expression<Func<T, bool>>? filter = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string includeProperties = "", bool trackChanges = true);
         Task<bool> Add(T entity);
         Task<bool> Upsert(T entity);

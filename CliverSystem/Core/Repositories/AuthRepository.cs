@@ -6,7 +6,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
-
 namespace CliverSystem.Core.Repositories
 {
     public class AuthRepository : IAuthRepository
@@ -33,6 +32,7 @@ namespace CliverSystem.Core.Repositories
                 Subject = new ClaimsIdentity(new Claim[]
               {
                         new Claim(ClaimTypes.Name, user.Name),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim("UserId", user.Id.ToString())
               }),
                 Expires = DateTime.UtcNow.AddDays(30),
@@ -61,7 +61,7 @@ namespace CliverSystem.Core.Repositories
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+                var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
 
                 // return user id from JWT token if validation successful
                 return userId;

@@ -8,10 +8,11 @@ namespace CliverSystem.Core.Contracts
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
-        Task<Post> FindById(int id);
-        Task<PagedList<Post>> GetPosts(PostParameters postParameters,bool trackChanges = true);
-
+        Task<Post> FindById(int id, string? userId = null);
+        Task<PagedList<Post>> GetPosts(PostParameters postParameters, string? userId = null, bool trackChanges = false);
+        Task<PagedList<Post>> GetPostsByUser(string userId, PostParameters postParameters);
         Task Update(int id, UpdatePostDto post);
-        Task UpdateStatus(int id, PostStatus status);
+        Task DeletePost(int id, string userId);
+        Task UpdateStatus(int id, string userId, PostStatus status);
     }
 }

@@ -5,5 +5,6 @@ namespace CliverSystem.Core.Contracts
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
+        Task<IEnumerable<Subcategory>> GetPopularSubcategories();
     }
 }
