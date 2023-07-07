@@ -1,13 +1,17 @@
-﻿namespace CliverSystem.DTOs
+﻿using CliverSystem.DTOs.RequestFeatures;
+
+namespace CliverSystem.DTOs
 {
     public class ApiResponse<T>
     {
         public T Data { get; set; }
         public string Message { get; set; }
-        public ApiResponse(T data, string message)
+        public MetaData? MetaData{ get; set; }
+        public ApiResponse(T data, string message, MetaData? metaData = null)
         {
-            this.Data= data;
-            this.Message=message;
+            this.Data = data;
+            this.Message = message;
+            MetaData = metaData;
         }
     }
 }

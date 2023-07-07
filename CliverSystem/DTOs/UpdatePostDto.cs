@@ -7,7 +7,7 @@ namespace CliverSystem.DTOs
         public UpdatePostDto()
         {
         }
-        public string? Title { get; set; } = string.Empty;
+        public string? Title { get; set; }
         public string? Description { get; set; }
         public int? SubcategoryId { get; set; }
 
@@ -29,10 +29,9 @@ namespace CliverSystem.DTOs
                 _images = value?.Select(s => s.Trim().Replace(";", "")).ToList();
             }
         }
-        public string? Video { get; set; }
         public string? Document { get; set; }
         public bool? HasOfferPackages { get; set; }
-        public bool IsPublish{ get; set; }
+        public bool? IsPublish{ get; set; }
         public ICollection<UpsertPackageDto>? Packages { get; set; }
     }
 }

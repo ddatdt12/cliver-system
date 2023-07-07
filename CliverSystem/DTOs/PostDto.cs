@@ -25,9 +25,23 @@ namespace CliverSystem.DTOs
         public List<string> Images { get; set; } = new List<string>();
         public string? Video { get; set; }
         public string? Document { get; set; }
+        public bool IsSaved { get; set; }
+        public double RatingAvg { get; set; }
+        public int RatingCount { get; set; }
         public bool HasOfferPackages { get; set; }
         public ICollection<PackageDto> Packages { get; set; }
         public DateTime? DeletedAt { get; set; }
+        public int MinPrice
+        {
+            get
+            {
+                if (Packages == null || Packages.Count == 0)
+                {
+                    return 0;
+                }
+                return Packages.Min(p => p.Price);
+            }
+        }
     }
 
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CliverSystem.Common.Enum;
 
 namespace CliverSystem.DTOs
 {
@@ -9,7 +8,6 @@ namespace CliverSystem.DTOs
         {
             _Tags = new List<string>();
         }
-
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; } = string.Empty;
 
