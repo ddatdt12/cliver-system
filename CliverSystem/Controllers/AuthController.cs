@@ -56,10 +56,8 @@ namespace CliverSystem.Controllers
         public IActionResult Verify()
         {
             var user = HttpContext.Items["User"] as User;
-            return Ok(new
-            {
-                data = user
-            });
+            var dto = _mapper.Map<UserDto>(user);
+            return Ok(new ApiResponse<UserDto>(dto,"Verify successfully"));
         }
 
         [HttpPost]
@@ -79,6 +77,7 @@ namespace CliverSystem.Controllers
             }
             TokenAccountMap.Add(user.Email, code);
             await _mailService.SendRegisterMail(new UserDto { Email = user.Email }, code.Value);
+
             return Ok(new
             {
                 message = "Send email verification successfully"
@@ -105,9 +104,7 @@ namespace CliverSystem.Controllers
                 Email = registerData.Email,
                 Password = registerData.Password,
             };
-            await _unitOfWork.Users.Add(newUser);
-            await _unitOfWork.CompleteAsync();
-
+            await _unitOfWork.Users.CreateNewUser(newUser);
             TokenAccountMap.Remove(data.Email);
             UserDto returnUser = _mapper.Map<UserDto>(newUser);
             return Ok(new
