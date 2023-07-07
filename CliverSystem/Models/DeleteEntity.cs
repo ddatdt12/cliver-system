@@ -1,4 +1,4 @@
-﻿namespace CliverSystem.Models
+﻿    namespace CliverSystem.Models
 {
     public class DeleteEntity
     {

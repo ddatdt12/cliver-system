@@ -12,6 +12,7 @@ namespace CliverSystem.Models
         {
             IsAvailable = true;
             Orders = null;
+            Status = PackageStatus.Available;
         }
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -21,10 +22,12 @@ namespace CliverSystem.Models
         public int? NumberOfRevisions { get; set; }
         public int Price { get; set; }
         public bool IsAvailable { get; set; }
+        public PackageStatus Status { get; set; }
         [Column(TypeName = "varchar(12)")]
         public PackageType Type { get; set; }
         public ICollection<Order>? Orders { get; set; }
         public int DeliveryDays { get; set; }
+        public int? ExpirationDays { get; set; }
     }
 
     public class PackageConfiguration : IEntityTypeConfiguration<Package>
@@ -35,6 +38,8 @@ namespace CliverSystem.Models
             builder
                 .Property(b => b.Type)
                 .HasDefaultValue(PackageType.Basic);
+
+            builder.HasQueryFilter(b => b.Type != PackageType.Custom);
         }
     }
 }

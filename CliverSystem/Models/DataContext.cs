@@ -16,7 +16,14 @@ namespace CliverSystem.Models
             modelBuilder.ApplyConfiguration(new PackageConfiguration());
             modelBuilder.ApplyConfiguration(new PostConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            //modelBuilder.ApplyConfiguration(new RoomConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageConfiguration());
+
+            modelBuilder.ApplyConfiguration(new RecentPostConfiguration());
+            modelBuilder.ApplyConfiguration(new SavedSellerConfiguration());
+            modelBuilder.ApplyConfiguration(new SavedServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new ParametersConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
         public DbSet<User> Users => Set<User>();
         public DbSet<Post> Posts => Set<Post>();
@@ -25,6 +32,19 @@ namespace CliverSystem.Models
         public DbSet<Package> Packages => Set<Package>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderHistory> OrderHistories => Set<OrderHistory>();
+        public DbSet<Room> Rooms => Set<Room>();
+        public DbSet<Message> Messages => Set<Message>();
+        public DbSet<RoomMember> RoomMembers => Set<RoomMember>();
+        public DbSet<RecentPost> RecentPosts => Set<RecentPost>();
+        public DbSet<SavedList> SavedLists => Set<SavedList>();
+        public DbSet<SavedSeller> SavedSellers => Set<SavedSeller>();
+        public DbSet<SavedService> SavedServices => Set<SavedService>();
+        public DbSet<Wallet> Wallets => Set<Wallet>();
+        public DbSet<Parameters> Parameters  => Set<Parameters>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<ServiceRequest> ServiceRequests => Set<ServiceRequest>();
+        public DbSet<TransactionHistory> TransactionHistories => Set<TransactionHistory>();
+        public DbSet<Resource> Resources => Set<Resource>();
 
         public override int SaveChanges()
         {
