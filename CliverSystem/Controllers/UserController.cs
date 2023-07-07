@@ -2,6 +2,8 @@ using AutoMapper;
 using CliverSystem.Attributes;
 using CliverSystem.Core.Contracts;
 using CliverSystem.DTOs;
+using CliverSystem.DTOs.Order;
+using CliverSystem.DTOs.RequestFeatures;
 using CliverSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +12,6 @@ namespace CliverSystem.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    [Protect]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -24,9 +25,10 @@ namespace CliverSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string search)
         {
-            var users = await _unitOfWork.Users.GetAll();
+            var userId = HttpContext.Items["UserId"] as string;
+            var users = await _unitOfWork.Users.Search(search, userId);
             var data = _mapper.Map<IEnumerable<UserDto>>(users);
             return Ok(new
             {
@@ -37,67 +39,55 @@ namespace CliverSystem.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(Guid id)
         {
-            var item = await _unitOfWork.Users.FindById(id);
+            var userId = HttpContext.Items["UserId"] as string;
+            var item = await _unitOfWork.Users.FindById(id.ToString(), userId);
 
             if (item == null)
                 return NotFound();
 
-            return Ok(item);
+            var userDto = _mapper.Map<UserDto>(item);
+            return Ok(new ApiResponse<UserDto>(userDto, "Get user info"));
+        }
+        [HttpGet("{id}/posts")]
+        public async Task<IActionResult> GetUserPosts(Guid id, PostParameters postParameters)
+        {
+            var posts = await _unitOfWork.Posts.GetPostsByUser(id.ToString(), postParameters);
+
+            var postDtos = _mapper.Map<IEnumerable<PostDto>>(posts);
+            return Ok(new ApiResponse<IEnumerable<PostDto>>(postDtos, "Get posts successfully"));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+
+
+        [HttpGet]
+        [Route("{id}/reviews")]
+        [Produces(typeof(ApiResponse<IEnumerable<ReviewDto>>))]
+        public async Task<IActionResult> GetReviews(string id)
         {
-            if (ModelState.IsValid)
-            {
-                await _unitOfWork.Users.Add(user);
-                await _unitOfWork.CompleteAsync();
+            var reviews = await _unitOfWork.Reviews.GetReviewsOfUser(id);
 
-                UserDto userDto = _mapper.Map<UserDto>(user);
-                return CreatedAtAction("GetItem", new { user.Id }, userDto);
-            }
-
-            return new JsonResult("Somethign Went wrong") { StatusCode = 500 };
+            var reviewDtos = _mapper.Map<IEnumerable<ReviewDto>>(reviews);
+            return Ok(new ApiResponse<IEnumerable<ReviewDto>>(reviewDtos, "Get Reviews succesfully"));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(string id, User user)
+        [HttpGet]
+        [Route("{id}/reviews/statistic")]
+        [Produces(typeof(ApiResponse<IEnumerable<ReviewDto>>))]
+        public async Task<IActionResult> GetReviewsStatistic(string id)
         {
-            if (id != user.Id)
-                return BadRequest();
+            var reviewStats = await _unitOfWork.Reviews.GetReviewsStatsOfUser(id);
 
-            await _unitOfWork.Users.Upsert(user);
-            await _unitOfWork.CompleteAsync();
-
-            // Following up the REST standart on update we need to return NoContent
-            return NoContent();
+            return Ok(new ApiResponse<IEnumerable<RatingStat>>(reviewStats, "Get Reviews  statistic succesfully"));
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateItem(string id, User user)
-        //{
-        //    if (id != user.Id)
-        //        return BadRequest();
-
-        //    await _unitOfWork.Users.Upsert(user);
-        //    await _unitOfWork.CompleteAsync();
-
-        //    // Following up the REST standart on update we need to return NoContent
-        //    return NoContent();
-        //}
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItem(Guid id)
+        [HttpGet]
+        [Route("{id}/reviews/sentiments")]
+        [Produces(typeof(ApiResponse<IEnumerable<ReviewSentimentDto>>))]
+        public async Task<IActionResult> GetReviewsSentiment(string id)
         {
-            var item = await _unitOfWork.Users.FindById(id);
-
-            if (item == null)
-                return NotFound();
-
-            await _unitOfWork.Users.Delete(id);
-            await _unitOfWork.CompleteAsync();
-
-            return Ok(item);
+            var reviewSentiments = await _unitOfWork.Reviews.GetReviewsSentiment(id);
+            var reviewSentimentsDto = _mapper.Map<IEnumerable<ReviewSentimentDto>>(reviewSentiments);
+            return Ok(new ApiResponse<IEnumerable<ReviewSentimentDto>>(reviewSentimentsDto, "Get Reviews  statistic succesfully"));
         }
     }
 }
