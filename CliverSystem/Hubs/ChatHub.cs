@@ -1,26 +1,67 @@
-﻿using CliverSystem.Models;
+﻿using AutoMapper;
+using CliverSystem.Core.Contracts;
+using CliverSystem.DTOs;
+using CliverSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Text.Json;
 
 namespace CliverSystem.Hubs
 {
+    [Authorize]
     public class ChatHub : Hub
     {
-        public IDictionary<string, string> _connections { get; set; }
-        public static List<Room> Rooms = new List<Room>();
-        public ChatHub(IDictionary<string, string> connections)
+        private IDictionary<string, string> _connections { get; set; }
+        private IUnitOfWork _unitOfWork { get; set; }
+        private IMapper _mapper { get; set; }
+        public ChatHub(IDictionary<string, string> connections, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _connections = connections;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task JoinRealtime(string userId)
+        public async Task SendMessage(CreateMessageDto message)
         {
-            //throw new HubException("This error will be sent to the client!");
             try
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, userId);
-                _connections.Add(Context.ConnectionId, userId);
-                System.Diagnostics.Debug.WriteLine("Check connections" + string.Join("; ", _connections.Values));
-                Console.WriteLine("Check connections:" + string.Join("; ", _connections.Values));
+                var userId = Context.UserIdentifier;
+                System.Diagnostics.Debug.WriteLine("Check user send message: " + userId);
+                message.SenderId = userId!;
+                var newMessage = await _unitOfWork.Messages.CreateNewMessage(message);
+                var membersId = await _unitOfWork.Rooms.GetMembersInRoom(newMessage.RoomId);
+                
+                var messageDto = _mapper.Map<MessageDto>(newMessage);
+                await Clients.Users(membersId).SendAsync("ReceiveMessage", messageDto);
+            }
+            catch (Exception e)
+            {
+                throw new HubException(e.Message);
+            }
+        }
+     
+        public async Task SendMessageStr(string messageJson)
+        {
+            try
+            {
+                CreateMessageDto? message =
+                   JsonSerializer.Deserialize<CreateMessageDto>(messageJson);
+
+                if (message == null)
+                {
+                    throw new Exception("Wrong format!");
+                }
+
+                var userId = Context.UserIdentifier;
+                System.Diagnostics.Debug.WriteLine("Check user send message: " + userId);
+                message.SenderId = userId!;
+                var newMessage = await _unitOfWork.Messages.CreateNewMessage(message);
+                var membersId = await _unitOfWork.Rooms.GetMembersInRoom(newMessage.RoomId);
+                
+                var messageDto = _mapper.Map<MessageDto>(newMessage);
+                await Clients.Users(membersId).SendAsync("ReceiveMessage", messageDto);
             }
             catch (Exception e)
             {
@@ -28,19 +69,18 @@ namespace CliverSystem.Hubs
             }
         }
 
-        public async Task SendMessage(Message message)
+        public async Task TestStr(string messageJson)
         {
-            if (_connections.TryGetValue(Context.ConnectionId, out string? userId)){
-                System.Diagnostics.Debug.WriteLine("Check user send message: " + userId);
-                Console.WriteLine("Check connections:" + string.Join("; ", _connections.Values));
-                await Clients.Groups(_connections.Values).SendAsync("ReceiveMessage", message);
-            }
-            else
+            try
             {
-                throw new HubException("Your connection is lost!");
+                var userId = Context.UserIdentifier;
+                await Clients.User(userId!).SendAsync("ReceiveTestStr", "Nhận được rồi nha data: " + messageJson);
+            }
+            catch (Exception e)
+            {
+                throw new HubException(e.Message);
             }
         }
-
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();
