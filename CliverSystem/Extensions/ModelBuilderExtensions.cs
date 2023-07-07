@@ -141,55 +141,55 @@ Sound Design".Split("\n"),
                 new
                 {
                     values=@"WordPress
-Website Builders & CMS
-Game Development
-Development for Streamers
-Web Programming
-E-Commerce Development
-Mobile Apps
-Desktop Applications
-Chatbots
-Support & IT
-Online Coding Lessons
-Cybersecurity & Data Protection
-Electronics Engineering
-Convert Files
-User Testing
-QA & Review
-Blockchain & Cryptocurrency
-NFT Development
-Databases
-Data Processing
-Data Engineering
-Data Science
-Other
-".Split("\n"),
-                    categoryId = 6
+                            Website Builders & CMS
+                            Game Development
+                            Development for Streamers
+                            Web Programming
+                            E-Commerce Development
+                            Mobile Apps
+                            Desktop Applications
+                            Chatbots
+                            Support & IT
+                            Online Coding Lessons
+                            Cybersecurity & Data Protection
+                            Electronics Engineering
+                            Convert Files
+                            User Testing
+                            QA & Review
+                            Blockchain & Cryptocurrency
+                            NFT Development
+                            Databases
+                            Data Processing
+                            Data Engineering
+                            Data Science
+                            Other
+                        ".Split("\n"),
+                        categoryId = 6
                 },
                 new
                 {
                     values=@"Virtual Assistant
-E-Commerce Management
-Market Research
-Sales
-Customer Care
-CRM Management NEW
-ERP ManagementNEW
-Supply Chain Management
-Project Management
-Event ManagementNEW
-Game Concept Design
-Business Plans
-Financial Consulting
-Legal Consulting
-Business Consulting
-Presentations
-HR Consulting
-Career Counseling
-Data Entry
-Data Analytics
-Data Visualization
-Other".Split("\n"),
+                            E-Commerce Management
+                            Market Research
+                            Sales
+                            Customer Care
+                            CRM Management NEW
+                            ERP ManagementNEW
+                            Supply Chain Management
+                            Project Management
+                            Event ManagementNEW
+                            Game Concept Design
+                            Business Plans
+                            Financial Consulting
+                            Legal Consulting
+                            Business Consulting
+                            Presentations
+                            HR Consulting
+                            Career Counseling
+                            Data Entry
+                            Data Analytics
+                            Data Visualization
+                            Other".Split("\n"),
                     categoryId = 7
                 },
                 new
@@ -239,30 +239,113 @@ Image Editing".Split("\n"),
                 listSubcategories = listSubcategories.Concat(kq).ToList();
 
             }
-
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                Id="53f891d8-bd32-40cf-a30c-04f2d5ecf164",
-                Name = "Test 1",
-                Email = "test@gmail.com",
-                Password = "123123123",
-                IsVerified = true,
-                CreatedAt =  new DateTime(2022, 7, 25),
-                UpdatedAt =  new DateTime(2022, 7, 25)
-            },
-            new User
-            {
-                Id="fedb88e2-decb-45a2-a0f1-8edc92b0b918",
-                Name = "admin",
-                Email = "admin@admin.com",
-                Password = "123123123",
-                Type = Common.Enum.UserType.Admin,
-                IsVerified = true,
-                CreatedAt = new DateTime(2022, 7, 25),
-                UpdatedAt =  new DateTime(2022, 7, 25),
-            }
+            modelBuilder.Entity<Wallet>().HasData(
+                    new Wallet()
+                    {
+                        Id = 1
+                    },
+                    new Wallet()
+                    {
+                        Id = 2
+                    },
+                    new Wallet()
+                    {
+                        Id = 3
+                    },
+                    new Wallet()
+                    {
+                        Id = 4
+                    },
+                    new Wallet()
+                    {
+                        Id = 9
+                    },
+                    new Wallet()
+                    {
+                        Id = 10
+                    }
+            );
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = "53f891d8-bd32-40cf-a30c-04f2d5ecf164",
+                    Name = "Test 1",
+                    Email = "test@gmail.com",
+                    Password = "123123123",
+                    Avatar = "https://picsum.photos/200",
+                    IsVerified = true,
+                    WalletId = 1,
+                    CreatedAt = new DateTime(2022, 7, 25),
+                    UpdatedAt = new DateTime(2022, 7, 25)
+                },
+                new User
+                {
+                    Id = "3dbb7902-74a5-4113-9052-a13919a73949",
+                    Name = "Test 2",
+                    Email = "test2@gmail.com",
+                    Password = "123123123",
+                    Avatar = "https://picsum.photos/200",
+                    IsVerified = true,
+                    WalletId = 2,
+                    CreatedAt = new DateTime(2022, 7, 25),
+                    UpdatedAt = new DateTime(2022, 7, 25),
+                },
+                new User
+                {
+                    Id = "f5a6e9d2-a322-4e0d-bf39-8acf7b6b2fc6",
+                    Name = "Test 3",
+                    Email = "test3@gmail.com",
+                    Avatar = "https://picsum.photos/200",
+                    Password = "123123123",
+                    IsVerified = true,
+                    WalletId = 3,
+                    CreatedAt = new DateTime(2022, 7, 25),
+                    UpdatedAt = new DateTime(2022, 7, 25),
+                },
+                new User
+                {
+                    Id = "fedb88e2-decb-45a2-a0f1-8edc92b0b918",
+                    Name = "admin",
+                    Avatar = "https://picsum.photos/200",
+                    Email = "admin@admin.com",
+                    Password = "123123123",
+                    Type = Common.Enum.UserType.Admin,
+                    IsVerified = true,
+                    WalletId = 4,
+                    CreatedAt = new DateTime(2022, 7, 25),
+                    UpdatedAt = new DateTime(2022, 7, 25),
+                },
+                new User
+                {
+                    Id = "733a44cc-f3b5-4e79-8dda-afb6be9c72a3",
+                    Name = "test 4",
+                    Avatar = "https://picsum.photos/200",
+                    Email = "test4@gmail.com",
+                    Password = "123123123",
+                    Type = Common.Enum.UserType.User,
+                    IsVerified = true,
+                    WalletId = 9,
+                    CreatedAt = new DateTime(2022, 12, 25),
+                    UpdatedAt = new DateTime(2022, 12, 25),
+                },
+                new User
+                {
+                    Id = "19328465-fcf8-4315-b687-bba6b86d13ed",
+                    Name = "test 5",
+                    Avatar = "https://picsum.photos/200",
+                    Email = "test5@gmail.com",
+                    Password = "123123123",
+                    Type = Common.Enum.UserType.User,
+                    IsVerified = true,
+                    WalletId = 10,
+                    CreatedAt = new DateTime(2022, 12, 25),
+                    UpdatedAt = new DateTime(2022, 12, 25),
+                }
             );
 
+            modelBuilder.Entity<Parameters>().HasData(
+            new Parameters { NumDaysReturnMoney = 5 }
+            );
         }
 
     }

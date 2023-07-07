@@ -20,7 +20,12 @@ namespace CliverSystem.Middlewares
                 if (userId != null)
                 {
                     // attach user to context on successful jwt validation
-                    context.Items["User"] = await unit.Users.FindById(userId);
+                    var user = await unit.Users.FindById(userId, false);
+                    context.Items["User"] = user;
+                    if (user != null)
+                    {
+                        context.Items["UserId"] = userId;
+                    }
                 }
             }
             await _next(context);
